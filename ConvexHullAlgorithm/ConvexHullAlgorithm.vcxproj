@@ -82,7 +82,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="basics.cpp" />
+    <ClCompile Include="DrawableGroup.cpp" />
+    <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Marker.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="basics.h" />
+    <ClInclude Include="DrawableGroup.h" />
+    <ClInclude Include="InputHandler.h" />
+    <ClInclude Include="InputState.h" />
+    <ClInclude Include="Marker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
