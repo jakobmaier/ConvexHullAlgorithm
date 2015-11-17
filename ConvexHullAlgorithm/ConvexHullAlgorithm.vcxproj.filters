@@ -13,42 +13,66 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\Algorithm">
+      <UniqueIdentifier>{3975e4cc-f71a-499b-a3c7-6ecf46b126b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Graphics">
+      <UniqueIdentifier>{2e7f761f-57ea-46f8-8e7e-6e374a2bfccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\IO">
+      <UniqueIdentifier>{68b99f53-ec3e-41b8-bc3c-f6b00b69296b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Algorithm">
+      <UniqueIdentifier>{9c37172a-5fc2-47c3-9bc1-41392c1ece1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Graphics">
+      <UniqueIdentifier>{7d0095b8-344e-4175-8825-2673eef7ad9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\IO">
+      <UniqueIdentifier>{b53a6188-2b2e-449e-bde7-3b8f19a7c178}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="DrawableGroup.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="InputState.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Marker.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="basics.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="DrawableGroup.cpp">
+      <Filter>Quelldateien\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Marker.cpp">
+      <Filter>Quelldateien\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Quelldateien\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="InputState.cpp">
+      <Filter>Quelldateien\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Dots.cpp">
+      <Filter>Quelldateien\Algorithm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DrawableGroup.h">
+    <ClInclude Include="basics.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="InputHandler.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\IO</Filter>
     </ClInclude>
     <ClInclude Include="InputState.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawableGroup.h">
+      <Filter>Headerdateien\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Marker.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Headerdateien\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="basics.h">
-      <Filter>Headerdateien</Filter>
+    <ClInclude Include="Dots.h">
+      <Filter>Headerdateien\Algorithm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
