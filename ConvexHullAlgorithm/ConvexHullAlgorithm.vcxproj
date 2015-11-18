@@ -89,6 +89,7 @@
     <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marker.cpp" />
+    <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h" />
@@ -97,6 +98,7 @@
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="Marker.h" />
+    <ClInclude Include="Point.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

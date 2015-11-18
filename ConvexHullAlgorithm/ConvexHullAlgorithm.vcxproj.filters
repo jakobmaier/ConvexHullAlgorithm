@@ -54,6 +54,9 @@
     <ClCompile Include="Dots.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Quelldateien\Algorithm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h">
@@ -72,6 +75,9 @@
       <Filter>Headerdateien\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Dots.h">
+      <Filter>Headerdateien\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
       <Filter>Headerdateien\Algorithm</Filter>
     </ClInclude>
   </ItemGroup>

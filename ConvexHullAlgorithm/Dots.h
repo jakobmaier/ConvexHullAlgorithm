@@ -1,22 +1,23 @@
 #pragma once
 #include "basics.h"
+#include "Point.h"
 
 class Dots {
-	typedef std::vector<Vec2f>::iterator DotIter;
-	std::vector<Vec2f> dots;
+	typedef std::vector<const Point*>::iterator DotIter;
+	std::vector<const Point*> dots;
 
-	DotIter getDotIter(Vec2f position);
+	DotIter getDotIter(const Point* position);
 public:
 	Dots();
 
-	void addDot(Vec2f position);
-	void removeDot(Vec2f position);
+	void addDot(const Point& dot);
+	void removeDot(const Point& dot);
 
-	void addDots(std::vector<Vec2f> dots);
+	void addDots(std::vector<const Point*> dots);
 	void clear();
 
 	int getDotCount() const;
-	Vec2f getDot(int index) const;
+	const Point* getDot(int index) const;
 
 	~Dots();
 };
