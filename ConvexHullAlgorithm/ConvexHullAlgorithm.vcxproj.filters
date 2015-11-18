@@ -51,10 +51,16 @@
     <ClCompile Include="InputState.cpp">
       <Filter>Quelldateien\IO</Filter>
     </ClCompile>
-    <ClCompile Include="Dots.cpp">
+    <ClCompile Include="Point.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
-    <ClCompile Include="Point.cpp">
+    <ClCompile Include="ConvexHull.cpp">
+      <Filter>Quelldateien\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="HullFinder.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="PointSet.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,10 +80,16 @@
     <ClInclude Include="Marker.h">
       <Filter>Headerdateien\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Dots.h">
+    <ClInclude Include="Point.h">
       <Filter>Headerdateien\Algorithm</Filter>
     </ClInclude>
-    <ClInclude Include="Point.h">
+    <ClInclude Include="ConvexHull.h">
+      <Filter>Headerdateien\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="HullFinder.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="PointSet.h">
       <Filter>Headerdateien\Algorithm</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
-#include "Dots.h"
+#include "basics.h"
+#include "PointSet.h"
+#include "Point.h"
 #include <iostream>
 
 int main() {
@@ -8,13 +10,13 @@ int main() {
 	shape.setFillColor(sf::Color::Green);
 
 
-	Dots* dots = new Dots();
+	PointSet* points = new PointSet();
 	for(int i = 0; i < 100; ++i)
 	{
-		dots->addDot(Vec2f(i, i));
-		dots->removeDot(Vec2f(i-1,i-1));
+		points->addPoint(*(new Point(static_cast<float>(i), static_cast<float>(i))));
+		//TODO: delete points
 	}
-	std::cout << dots->getDotCount() << std::endl;
+	std::cout << points->getSize() << std::endl;
 
 
 	while(window.isOpen()) {
@@ -30,6 +32,6 @@ int main() {
 	}
 
 
-	delete dots;
+	delete points;
 	return 0;
 }

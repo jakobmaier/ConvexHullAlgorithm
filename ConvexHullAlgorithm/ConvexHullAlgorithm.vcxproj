@@ -83,8 +83,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basics.cpp" />
-    <ClCompile Include="Dots.cpp" />
+    <ClCompile Include="ConvexHull.cpp" />
+    <ClCompile Include="PointSet.cpp" />
     <ClCompile Include="DrawableGroup.cpp" />
+    <ClCompile Include="HullFinder.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
@@ -93,8 +95,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h" />
-    <ClInclude Include="Dots.h" />
+    <ClInclude Include="ConvexHull.h" />
+    <ClInclude Include="PointSet.h" />
     <ClInclude Include="DrawableGroup.h" />
+    <ClInclude Include="HullFinder.h" />
     <ClInclude Include="InputHandler.h" />
     <ClInclude Include="InputState.h" />
     <ClInclude Include="Marker.h" />
