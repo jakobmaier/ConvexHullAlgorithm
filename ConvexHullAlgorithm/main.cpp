@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include "basics.h"
 #include "PointSet.h"
 #include "Point.h"
 #include <iostream>
@@ -11,13 +10,15 @@ int main() {
 
 
 	PointSet* points = new PointSet();
+	points->addPoint(*(new Point(0.452f, 23.53454f)));
 	for(int i = 0; i < 100; ++i)
 	{
 		points->addPoint(*(new Point(static_cast<float>(i), static_cast<float>(i))));
 		//TODO: delete points
 	}
-	std::cout << points->getSize() << std::endl;
-
+	//std::cout << points->getSize() << std::endl;
+	points->forceAnglesToBeUp2Date();
+	std::cout << points->String() << std::endl;;
 
 	while(window.isOpen()) {
 		sf::Event event;

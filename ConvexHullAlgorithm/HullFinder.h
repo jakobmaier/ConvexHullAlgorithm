@@ -7,7 +7,6 @@ class HullFinder {
 	const PointSet* pointSet;
 	ConvexHull* hull;
 
-	const Point* getPivot() const;
 	void findConvexHull();
 public:
 	explicit HullFinder(const PointSet& input);

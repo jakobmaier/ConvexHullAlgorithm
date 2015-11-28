@@ -22,7 +22,7 @@ int ConvexHull::getSize() const {
 }
 
 const Point* ConvexHull::getPoint(int index) const {
-	assert(index >= 0 && index < point.size());
+	assert(index >= 0 && index < static_cast<int>(points.size()));
 	return points[index];
 }
 
