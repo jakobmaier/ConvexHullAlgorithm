@@ -2,6 +2,7 @@
 #include "PointSet.h"
 #include "Point.h"
 #include <iostream>
+#include "utils.h"
 
 int main() {
 	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
@@ -13,12 +14,16 @@ int main() {
 	points->addPoint(*(new Point(0.452f, 23.53454f)));
 	for(int i = 0; i < 100; ++i)
 	{
-		points->addPoint(*(new Point(static_cast<float>(i), static_cast<float>(i))));
-		//TODO: delete points
+		//points->addPoint(*(new Point(static_cast<float>(i), static_cast<float>(i))));
+		points->addPoint(*new Point(random(-100, +100), random(-100, +100) ));
 	}
 	//std::cout << points->getSize() << std::endl;
-	points->forceAnglesToBeUp2Date();
+	//points->forceAnglesToBeUp2Date();
+	points->sortPointsByAngle();
 	std::cout << points->String() << std::endl;;
+
+	points->findConvexHull();
+
 
 	while(window.isOpen()) {
 		sf::Event event;

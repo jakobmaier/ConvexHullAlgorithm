@@ -63,6 +63,9 @@
     <ClCompile Include="PointSet.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="PointSet.h">
       <Filter>Headerdateien\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

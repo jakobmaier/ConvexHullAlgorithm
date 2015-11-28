@@ -41,11 +41,17 @@ public:
 	void addPoints(std::vector<const Point*> points);
 	void clear();
 
+	void sortPointsByAngle();
 	void sortPoints(PointComperator comperator);
 
 	int getSize() const;
 	const Point* getPoint(int index) const;
 	const Point* getReferencePoint() const;
+
+
+
+	void findConvexHull();
+
 
 	void forceAnglesToBeUp2Date();
 	std::string String() const;

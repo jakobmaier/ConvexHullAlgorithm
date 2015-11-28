@@ -10,8 +10,9 @@ class ConvexHull {
 
 public:
 	ConvexHull();
+	explicit ConvexHull(std::stack<const Point*> hull);
+
 	void addPoint(const Point& point);
-	void removeLastPoint();	
 	void clear();
 
 	int getSize() const;
@@ -20,5 +21,6 @@ public:
 	bool containsPoint(const Point& point) const;
 
 	~ConvexHull();
+	std::string String() const;
 };
 

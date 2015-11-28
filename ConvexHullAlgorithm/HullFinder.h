@@ -4,12 +4,12 @@ class PointSet;
 class ConvexHull;
 
 class HullFinder {
-	const PointSet* pointSet;
+	PointSet* pointSet;
 	ConvexHull* hull;
 
 	void findConvexHull();
 public:
-	explicit HullFinder(const PointSet& input);
+	explicit HullFinder(PointSet& input);
 
 	const ConvexHull* getHull();
 

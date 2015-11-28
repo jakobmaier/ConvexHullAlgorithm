@@ -1,21 +1,18 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include "PointSet.h"
+
 #include <assert.h>
 #include "Point.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>
-#define _USE_MATH_DEFINES
-#include <math.h>
+#include "utils.h"
+#include <stack>
+#include "ConvexHull.h"
 
 const float EPS = 0.00001f;
-
-float normaliseAngle(float angleInRad) {
-	float PI_2 = static_cast<float>(2 * M_PI);
-	angleInRad += PI_2 *  ceilf(-angleInRad / PI_2);
-	angleInRad -= PI_2 * floorf( angleInRad / PI_2);
-	return angleInRad;
-}
-
 
 
 PointData::PointData(const Point& point) {
@@ -83,10 +80,13 @@ void PointSet::updateAngleToReferencePoint(PointData* point) {
 	Vec2f ref = referencePoint->point->pos();
 	Vec2f pos = point->point->pos();
 	point->angleToReference = normaliseAngle(atan2f(pos.y - ref.y, pos.x - ref.x));
-	assert(point->angleToReference >= 0 && point->angleToReference < 360);
+	assert(point->angleToReference < deg2rad(360));
+
 	if(point == referencePoint) {
 		assert(abs(referencePoint->angleToReference) < EPS);
 		referencePoint->angleToReference = 0;
+	} else {
+		assert(point->angleToReference >= deg2rad(180) - EPS);		// Since the reference point is the bottom most point, angles cant be lower than 180
 	}
 }
 
@@ -99,7 +99,8 @@ void PointSet::updateAnglesToReferencePoint() {
 		Vec2f pos = p->point->pos();
 		float angle = atan2f(pos.y - ref.y, pos.x - ref.x);
 		p->angleToReference = normaliseAngle(angle);
-		assert(p->angleToReference >= 0 && p->angleToReference < 360);
+		assert(p->angleToReference < deg2rad(360));
+		assert(p->angleToReference >= deg2rad(180) || p == referencePoint);		// Since the reference point is the bottom most point, angles cant be lower than 180
 	}
 	assert(abs(referencePoint->angleToReference) < EPS);
 	referencePoint->angleToReference = 0;
@@ -146,6 +147,26 @@ void PointSet::clear() {
 	anglesToReferenceAreUp2Date = true;
 }
 
+void PointSet::sortPointsByAngle() {
+	forceAnglesToBeUp2Date();
+
+	Vec2f refPos = referencePoint->point->pos();
+
+	std::sort(points.begin(), points.end(),
+			  [refPos](PointData* a, PointData* b) {
+
+		if(a->angleToReference == b->angleToReference) {				// The points are colinear (same angle) --> the point that is nearer to the reference should come first
+			float distA = squareDistance(refPos, a->point->pos());
+			float distB = squareDistance(refPos, b->point->pos());
+			return distA < distB;
+		}
+
+		return a->angleToReference < b->angleToReference;
+	}
+	);
+
+	assert(points.front() == referencePoint);
+}
 
 
 void PointSet::sortPoints(PointComperator comperator) {
@@ -165,6 +186,12 @@ const Point* PointSet::getPoint(int index) const {
 	return points[index]->point;
 }
 
+const Point* PointSet::getReferencePoint() const {
+	return referencePoint->point;
+}
+
+
+
 void PointSet::forceAnglesToBeUp2Date() {
 	if(!anglesToReferenceAreUp2Date) {
 		updateAnglesToReferencePoint();
@@ -177,7 +204,7 @@ std::string PointSet::String() const {
 	ss << points.size() << " Points" << std::endl;
 	int idx = 0;
 	for(PointData* p : points) {
-		ss << "  (" << std::setfill(' ') << std::setw(3) << idx << ") ";
+		ss << "  (" << std::setfill(' ') << std::setw(3) << std::right << idx << ") ";
 		ss << std::setfill(' ') << std::setw(8) << std::right << p->point->x;
 		ss << " x ";
 		ss << std::setfill(' ') << std::setw(8) << std::left << p->point->y;
@@ -190,5 +217,60 @@ std::string PointSet::String() const {
 	}
 
 	return ss.str();
+}
+
+
+
+
+
+
+
+bool isCCW(PointData* start, PointData* endA, PointData* endB) {
+	return isCCW(start->point->pos(), endA->point->pos(), endB->point->pos());
+}
+
+
+
+void PointSet::findConvexHull() {
+	if(points.size() <= 3) {			// The points are already a convex hull
+		return;
+	}
+
+	std::stack<PointData*> candiates;
+
+	sortPointsByAngle();
+	PointData* prev;
+	PointData* now;	
+
+	candiates.push(points.back());
+	candiates.push(referencePoint);	// Is always the first (idx 0) element in list
+
+
+	for(int i = 1; i < points.size();) {
+		PointData* point = points[i];
+
+		now = candiates.top();
+		candiates.pop(); 
+		prev = candiates.top();
+		candiates.push(now);
+
+		if(isCCW(prev, now, point)) {
+			candiates.push(point);
+			++i;
+		} else {
+			candiates.pop();
+		}
+
+	}
+
+	ConvexHull hull(candiates);
+	while(!candiates.empty()) {
+		hull.addPoint(*candiates.top()->point);
+		candiates.pop();
+	}
+
+	std::cout << hull.String();
+	return;
+
 }
 
