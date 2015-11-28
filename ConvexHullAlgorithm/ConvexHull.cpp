@@ -18,10 +18,6 @@ void ConvexHull::addPoint(const Point& point) {
 	points.push_back(&point);
 }
 
-void ConvexHull::removeLastPoint() {
-	points.pop_back();
-}
-
 void ConvexHull::clear() {
 	points.clear();
 }

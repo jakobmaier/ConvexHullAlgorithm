@@ -79,7 +79,7 @@ float deg2rad(float angleInDeg) {
 float cross(Vec2f start, Vec2f endA, Vec2f endB) { // cross product of two vectors defined by three points. The start point is shared
 	Vec2f sa = endA - start;
 	Vec2f sb = endB - start;
-	return sa.x * sb.x - sa.y * sb.x;
+	return sa.x * sb.y - sa.y * sb.x;
 }
 
 bool collinear(Vec2f a, Vec2f b, Vec2f c) {
@@ -92,4 +92,12 @@ bool isCCW(Vec2f start, Vec2f endA, Vec2f endB) {
 
 bool isLeftOfLine(Vec2f start, Vec2f end, Vec2f other) {
 	return isCCW(start, end, other);
+}
+
+
+float getAngle(Vec2f vector) {
+	float angle = normaliseAngle(atan2f(vector.y, vector.x));
+	assert(angle >= 0);
+	assert(angle < deg2rad(360));
+	return angle;
 }

@@ -12,6 +12,7 @@ public:
 	ConvexHull();
 	explicit ConvexHull(std::stack<const Point*> hull);
 
+
 	void addPoint(const Point& point);
 	void clear();
 
