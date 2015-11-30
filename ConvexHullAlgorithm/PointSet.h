@@ -36,7 +36,7 @@ public:
 	void clear();
 
 	void sortPoints(PointComperator comperator);
-	void PointSet::sortPointsByAngle();
+	void sortPointsByAngle();
 
 	int getSize() const;
 	const Point* getPoint(int index) const;
@@ -44,7 +44,7 @@ public:
 	const Point* getReferencePoint() const;
 
 
-	void findConvexHull();
+	//void findConvexHull();
 
 
 	std::string String() const;

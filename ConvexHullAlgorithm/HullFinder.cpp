@@ -71,10 +71,10 @@ HullState findConvexHullStep(PointSet *pointSet, int simulateUntilStep) {
 
   pointSet->sortPointsByAngle();
 
-  ++step;
-  if (step == simulateUntilStep) // sort done -> update numbers
+  //++step;
+  if (step++ == simulateUntilStep) // sort done -> update numbers
   {
-    return HullState::SortDone();
+    return HullState::SortDone(step);
   }
 
   if (pointCount <= 3) { // The points are already a convex hull
@@ -94,10 +94,10 @@ HullState findConvexHullStep(PointSet *pointSet, int simulateUntilStep) {
   candiates.push(pointSet->getReferencePoint()); // Is always the first (idx 0)
                                                  // element in the point set
 
-  ++step;
-  if (step == simulateUntilStep) // break print candidates
+  //++step;
+  if (step++ == simulateUntilStep) // break print candidates
   {
-    return HullState::CandidateAdded(candiates);
+    return HullState::CandidateAdded(candiates, step);
   }
 
   for (int i = 1; i < pointCount;) {
@@ -113,16 +113,16 @@ HullState findConvexHullStep(PointSet *pointSet, int simulateUntilStep) {
       // std::cout << "adding " << i << std::endl;
       ++i;
 
-      ++step;
-      if (step == simulateUntilStep) // break print candidates
+      //++step;
+      if (step++ == simulateUntilStep) // break print candidates
       {
-        return HullState::CandidateAdded(candiates);
+        return HullState::CandidateAdded(candiates, step);
       }
     } else {
-      ++step;
-      if (step == simulateUntilStep) // break print candidates
+      //++step;
+      if (step++ == simulateUntilStep) // break print candidates
       {
-        return HullState::CandidatePoped(candiates, point);
+        return HullState::CandidatePoped(candiates, point, step);
       }
       // std::cout << "pop" << std::endl;
       candiates.pop();
@@ -132,27 +132,30 @@ HullState findConvexHullStep(PointSet *pointSet, int simulateUntilStep) {
   return HullState::HullFound(hull);
 }
 
-
-// Hull state 
-HullState HullState::CandidateAdded(std::stack<const Point *> candiates) {
+// Hull state
+HullState HullState::CandidateAdded(std::stack<const Point *> candiates,
+                                    int step) {
   HullState state;
   state.state = CANDIDATE_ADDED;
   state.candiates = candiates;
+  state.step = step;
   return state;
 }
 
 HullState HullState::CandidatePoped(std::stack<const Point *> candiates,
-                                    const Point *point) {
+                                    const Point *point, int step) {
   HullState state;
   state.state = CANDIDATE_POPED;
   state.candiates = candiates;
   state.pointThatCausedPop = point;
+  state.step = step;
   return state;
 }
 
-HullState HullState::SortDone() {
+HullState HullState::SortDone(int step) {
   HullState state;
   state.state = SORT_DONE;
+  state.step = step;
   return state;
 }
 
@@ -163,6 +166,6 @@ HullState HullState::HullFound(ConvexHull hull) {
   return state;
 }
 
-//HullState::HullState()
+// HullState::HullState()
 //{
 //}

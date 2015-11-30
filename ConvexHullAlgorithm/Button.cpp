@@ -25,6 +25,8 @@ Button::Button(ResourceManager &resMan, std::string buttontxt,
   m_text.setColor(sf::Color::White);
   m_text.setPosition(position.x, position.y+8);
   SetText(buttontxt);
+
+  Update(Input());
 }
 
 Button::~Button() {}
