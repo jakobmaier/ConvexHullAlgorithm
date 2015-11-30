@@ -6,7 +6,6 @@
 #define SIDEBAR_X 0.3f
 
 #define WINDOW_TITLE "Graham's Scan Convex Hull Algorithm by Jakob and Simon @ "
-
 #define WORKING_DIR "Resources/"
 
 #define BTN_DEFAULT_COLOR sf::Color(193, 133, 133, 133)
@@ -22,6 +21,8 @@
 #define LINE_COLOR_DELETE sf::Color(193, 255, 133, 210)
 #define LINE_COLOR_NEW sf::Color(33,33,33,30)
 
-#define NR_OF_POINTS_TO_GENERATE 500
+#define NR_OF_POINTS_TO_GENERATE 100
 
 #define GAME_RATIO ((16.f * (1 - SIDEBAR_X)) / 12.f)
+
+

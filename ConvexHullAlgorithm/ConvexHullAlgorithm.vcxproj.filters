@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Ressourcendateien">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Headerdateien\Algorithm">
       <UniqueIdentifier>{3975e4cc-f71a-499b-a3c7-6ecf46b126b8}</UniqueIdentifier>
     </Filter>
@@ -39,20 +35,11 @@
     <ClCompile Include="basics.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="DrawableGroup.cpp">
-      <Filter>Quelldateien\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Marker.cpp">
-      <Filter>Quelldateien\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Point.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
     <ClCompile Include="ConvexHull.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
-    </ClCompile>
-    <ClCompile Include="HullFinder.cpp">
-      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="PointSet.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
@@ -61,36 +48,33 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Button.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Circle.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="HullFinder.cpp">
+      <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
     <ClCompile Include="LineShape.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Quelldateien\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Hull.cpp">
+      <Filter>Quelldateien\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Dots.cpp">
+      <Filter>Quelldateien\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="DrawableGroup.h">
-      <Filter>Headerdateien\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Marker.h">
-      <Filter>Headerdateien\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Headerdateien\Algorithm</Filter>
     </ClInclude>
     <ClInclude Include="ConvexHull.h">
       <Filter>Headerdateien\Algorithm</Filter>
-    </ClInclude>
-    <ClInclude Include="HullFinder.h">
-      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="PointSet.h">
       <Filter>Headerdateien\Algorithm</Filter>
@@ -101,22 +85,28 @@
     <ClInclude Include="Config.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Headerdateien\IO</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Circle.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="LineShape.h">
+      <Filter>Headerdateien\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Headerdateien\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="HullFinder.h">
+      <Filter>Headerdateien\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Headerdateien\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Hull.h">
+      <Filter>Headerdateien\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Dots.h">
       <Filter>Headerdateien\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

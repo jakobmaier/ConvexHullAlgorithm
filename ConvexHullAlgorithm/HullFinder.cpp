@@ -56,12 +56,7 @@ ConvexHull findConvexHull(PointSet *pointSet) {
   return hull;
 }
 
-// int step = 0;
-// if (button.presed())
-// step++;
-// state = findConvexHullStep(pointSet, step);
-// state.rendeR();
-//}
+
 
 HullState findConvexHullStep(PointSet *pointSet, int simulateUntilStep) {
 

@@ -122,14 +122,13 @@
   <ItemGroup>
     <ClCompile Include="basics.cpp" />
     <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ConvexHull.cpp" />
+    <ClCompile Include="Dots.cpp" />
+    <ClCompile Include="Hull.cpp" />
     <ClCompile Include="LineShape.cpp" />
     <ClCompile Include="PointSet.cpp" />
-    <ClCompile Include="DrawableGroup.cpp" />
     <ClCompile Include="HullFinder.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Marker.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="utils.cpp" />
@@ -137,15 +136,14 @@
   <ItemGroup>
     <ClInclude Include="basics.h" />
     <ClInclude Include="Button.h" />
-    <ClInclude Include="Circle.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConvexHull.h" />
+    <ClInclude Include="Dots.h" />
+    <ClInclude Include="Hull.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="LineShape.h" />
     <ClInclude Include="PointSet.h" />
-    <ClInclude Include="DrawableGroup.h" />
     <ClInclude Include="HullFinder.h" />
-    <ClInclude Include="Marker.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
