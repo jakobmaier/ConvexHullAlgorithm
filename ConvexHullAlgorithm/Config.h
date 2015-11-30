@@ -13,9 +13,11 @@
 #define BTN_DEFAULT_ACTIVE_COLOR sf::Color(193, 255, 133, 133)
 #define BTN_DEFAULT_INDICATOR_COLOR sf::Color(144, 144, 144, 133)
 
+#define CLEAR_COLOR sf::Color(100,100,100,100)
 #define DOT_COLOR sf::Color::Red
 #define DOT_REFERENCE_COLOR sf::Color::Yellow
 #define DOT_LINE sf::Color::Black
+#define DOT_NUMBER_TEXT sf::Color::Black
 
 #define NR_OF_POINTS_TO_GENERATE 500
 

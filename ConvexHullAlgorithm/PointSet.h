@@ -16,7 +16,6 @@ struct Point;
  */
 class PointSet {
 	typedef std::vector<const Point*>::iterator PointIter;
-	std::vector<const Point*> points;
 	const Point* referencePoint;				// bottom/right-most point; Is updated everytime the pointset is modified
 	
 	PointIter getPointIter(const Point* point);
@@ -24,6 +23,8 @@ class PointSet {
 	bool updateReferencePoint(const Point& newPoint);
 
 public:
+	std::vector<const Point*> points;
+
 	typedef bool PointComperator(const Point* a, const Point* b);
 
 	PointSet();

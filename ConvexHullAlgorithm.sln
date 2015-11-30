@@ -1,18 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConvexHullAlgorithm", "ConvexHullAlgorithm\ConvexHullAlgorithm.vcxproj", "{73AF473C-0630-4D87-AD79-F5B4093FCED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		LLVM|Win32 = LLVM|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{73AF473C-0630-4D87-AD79-F5B4093FCED7}.Debug|Win32.ActiveCfg = Debug|Win32
 		{73AF473C-0630-4D87-AD79-F5B4093FCED7}.Debug|Win32.Build.0 = Debug|Win32
+		{73AF473C-0630-4D87-AD79-F5B4093FCED7}.LLVM|Win32.ActiveCfg = LLVM|Win32
+		{73AF473C-0630-4D87-AD79-F5B4093FCED7}.LLVM|Win32.Build.0 = LLVM|Win32
 		{73AF473C-0630-4D87-AD79-F5B4093FCED7}.Release|Win32.ActiveCfg = Release|Win32
 		{73AF473C-0630-4D87-AD79-F5B4093FCED7}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

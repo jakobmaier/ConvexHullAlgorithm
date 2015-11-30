@@ -6,7 +6,7 @@ class ResourceManager
 public:
 	enum Fonts
 	{
-		DEFAULT
+		DEFAULT, HACK
 	};
 
 	ResourceManager();
@@ -17,5 +17,6 @@ public:
 
 private:
 	sf::Font m_capture_it;
+	sf::Font m_hack;
 };
 
