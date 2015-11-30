@@ -83,27 +83,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basics.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="ConvexHull.cpp" />
     <ClCompile Include="PointSet.cpp" />
     <ClCompile Include="DrawableGroup.cpp" />
     <ClCompile Include="HullFinder.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="InputState.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Marker.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="ConvexHull.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="PointSet.h" />
     <ClInclude Include="DrawableGroup.h" />
     <ClInclude Include="HullFinder.h" />
-    <ClInclude Include="InputHandler.h" />
-    <ClInclude Include="InputState.h" />
     <ClInclude Include="Marker.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

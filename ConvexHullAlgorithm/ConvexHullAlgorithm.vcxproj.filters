@@ -45,12 +45,6 @@
     <ClCompile Include="Marker.cpp">
       <Filter>Quelldateien\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Quelldateien\IO</Filter>
-    </ClCompile>
-    <ClCompile Include="InputState.cpp">
-      <Filter>Quelldateien\IO</Filter>
-    </ClCompile>
     <ClCompile Include="Point.cpp">
       <Filter>Quelldateien\Algorithm</Filter>
     </ClCompile>
@@ -66,16 +60,16 @@
     <ClCompile Include="utils.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h">
       <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.h">
-      <Filter>Headerdateien\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="InputState.h">
-      <Filter>Headerdateien\IO</Filter>
     </ClInclude>
     <ClInclude Include="DrawableGroup.h">
       <Filter>Headerdateien\Graphics</Filter>
@@ -96,6 +90,21 @@
       <Filter>Headerdateien\Algorithm</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Headerdateien\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
