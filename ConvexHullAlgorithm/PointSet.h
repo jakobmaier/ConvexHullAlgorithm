@@ -21,17 +21,17 @@ class PointSet {
 	
 	PointIter getPointIter(const Point* point);
 
-	void updateReferencePoint(const Point& newPoint);
+	bool updateReferencePoint(const Point& newPoint);
 
 public:
 	typedef bool PointComperator(const Point* a, const Point* b);
 
 	PointSet();
 
-	void addPoint(const Point& point);
-	void removePoint(const Point& point);
+	bool addPoint(const Point& point);
+	bool removePoint(const Point& point);
 
-	void addPoints(std::vector<const Point*> points);
+	//bool addPoints(std::vector<const Point*> points);
 	void clear();
 
 	void sortPoints(PointComperator comperator);

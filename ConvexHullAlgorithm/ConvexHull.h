@@ -6,7 +6,6 @@ struct Point;
 class ConvexHull {
 	typedef std::vector<const Point*>::iterator PointIter;
 	typedef std::vector<const Point*>::const_iterator CPointIter;
-	std::vector<const Point*> points;
 
 public:
 	ConvexHull();
@@ -23,5 +22,8 @@ public:
 
 	~ConvexHull();
 	std::string String() const;
+
+	std::vector<const Point*> points;
+
 };
 

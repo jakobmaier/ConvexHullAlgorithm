@@ -5,4 +5,6 @@ struct Input
 {
 	Vec2f mousePos;
 	bool leftMouseClicked = false;
+	bool isMouseOverSidebar = false;
+
 };

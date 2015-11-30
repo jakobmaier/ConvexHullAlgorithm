@@ -35,24 +35,26 @@ PointSet::PointIter PointSet::getPointIter(const Point* point) {
 	return points.end();
 }
 
-void PointSet::updateReferencePoint(const Point& newPoint) {
+bool PointSet::updateReferencePoint(const Point& newPoint) {
 	if(referencePoint == nullptr) {
 		referencePoint = &newPoint;
-		return;
+		return true;
 	}
 	if((newPoint.y < referencePoint->y) ||
 	   (newPoint.y == referencePoint->y && newPoint.x > referencePoint->x)) {
 		referencePoint = &newPoint;
+		return true;
 	}
+	return false;
 }
 
 
-void PointSet::addPoint(const Point& point) {
+bool PointSet::addPoint(const Point& point) {
 	points.push_back(&point);
-	updateReferencePoint(point);
+	return updateReferencePoint(point);
 }
 
-void PointSet::removePoint(const Point& point) {
+bool PointSet::removePoint(const Point& point) {
 	PointIter pointIter = getPointIter(&point);
 	assert(pointIter != points.end());
 	points.erase(pointIter);
@@ -62,12 +64,15 @@ void PointSet::removePoint(const Point& point) {
 		for(const Point* point : points) {
 			updateReferencePoint(*point);
 		}
+		return true;
 	}
+	return false;
 }
 
-void PointSet::addPoints(std::vector<const Point*> points) {
-	points.insert(std::end(this->points), std::begin(points), std::end(points));
-}
+// to work this function would have to update the reference point
+//bool PointSet::addPoints(std::vector<const Point*> points) {
+//	points.insert(std::end(this->points), std::begin(points), std::end(points));
+//}
 
 void PointSet::clear() {
 	points.clear();
@@ -79,6 +84,7 @@ void PointSet::sortPoints(PointComperator comperator) {
 }
 
 void PointSet::sortPointsByAngle() {
+	if (points.size() == 0){ return; }
 	Vec2f ref = referencePoint->pos();
 
 	std::sort(points.begin(), points.end(), [ref](const Point* a, const Point* b) {

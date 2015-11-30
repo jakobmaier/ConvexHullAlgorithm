@@ -66,6 +66,12 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="LineShape.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="basics.h">
@@ -106,6 +112,12 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="LineShape.h">
+      <Filter>Headerdateien\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -84,7 +84,9 @@
   <ItemGroup>
     <ClCompile Include="basics.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ConvexHull.cpp" />
+    <ClCompile Include="LineShape.cpp" />
     <ClCompile Include="PointSet.cpp" />
     <ClCompile Include="DrawableGroup.cpp" />
     <ClCompile Include="HullFinder.cpp" />
@@ -97,9 +99,11 @@
   <ItemGroup>
     <ClInclude Include="basics.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="ConvexHull.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LineShape.h" />
     <ClInclude Include="PointSet.h" />
     <ClInclude Include="DrawableGroup.h" />
     <ClInclude Include="HullFinder.h" />

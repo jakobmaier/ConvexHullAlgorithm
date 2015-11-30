@@ -14,6 +14,7 @@ const float EPS = 0.00001f;
 
 
 ConvexHull findConvexHull(PointSet* pointSet) {
+
 	int pointCount = pointSet->getSize();
 
 	pointSet->sortPointsByAngle();
