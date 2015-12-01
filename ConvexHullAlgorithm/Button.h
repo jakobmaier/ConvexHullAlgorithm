@@ -10,7 +10,7 @@
 
 class Button {
 public:
-  Button();
+  //Button();
   Button(ResourceManager &resMan, std::string buttontxt, sf::Vector2f position,
          sf::Vector2f size = sf::Vector2f(350.f, 50.f));
   ~Button();
@@ -18,7 +18,7 @@ public:
   void Draw(sf::RenderWindow &window) const;
   void Update(Input input);
   // void setTriggerFunction(std::function<void(Hul)> );
-  //void setTriggerFunction(function triggerFunction, Menu &menu);
+ void setTriggerFunction(std::function<void(void)> triggerFunction, Menu &menu);
   void SetText(std::string text);
   void SetNumberText(double number);
   void SetActiveColor(sf::Color color);
@@ -31,6 +31,6 @@ private:
   sf::Color m_default_color;
   sf::Color m_default_active_color;
 
-  //function m_triggerFunction;
-  //Menu *m_menu;
+  std::function<void(void)> m_triggerFunction;
+  Menu *m_menu;
 };

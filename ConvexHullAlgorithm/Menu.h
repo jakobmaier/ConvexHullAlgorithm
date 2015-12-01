@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Dots.h"
-#include "Hull.h"
-#include "ResourceManager.h"
-#include "Button.h"
+class Dots;
+class Hull;
+class ResourceManager;
+class Button;
 
 struct Input;
 
@@ -16,7 +16,8 @@ public:
   void Update(Input input);
 
 private:
-	//std::vector<Button*> m_buttons;
+	Button* td;
+	std::vector<Button*> m_buttons;
 	std::vector<Button*> m_indicators;
 	sf::RectangleShape m_background;
 

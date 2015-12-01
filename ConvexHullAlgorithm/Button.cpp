@@ -6,14 +6,14 @@
 #include <SFML/Graphics/Font.hpp>
 #include "Input.h"
 
-Button::Button() {}
+//Button::Button() {}
 
 Button::Button(ResourceManager &resMan, std::string buttontxt,
                sf::Vector2f position, sf::Vector2f size)
     : m_default_color(BTN_DEFAULT_COLOR),
       m_default_active_color(BTN_DEFAULT_ACTIVE_COLOR)
-	  //,
-      //m_triggerFunction(nullptr)
+	  ,
+      m_triggerFunction(nullptr)
 {
 
   m_body.setSize(size);
@@ -54,6 +54,10 @@ void Button::Update(Input input) {
   } else {
     m_body.setFillColor(m_default_color);
   }
+}
+
+void Button::setTriggerFunction(std::function<void()> triggerFunction, Menu& menu)
+{
 }
 
 //void Button::setTriggerFunction(function triggerFunction, Menu &menu) {
