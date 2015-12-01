@@ -66,6 +66,14 @@ float random(float min, float max) {
 	return rand;
 }
 
+float randomBinominal(float min, float max) {
+	/*static std::mt19937 generator;
+	static std::binomial_distribution<float> uniform_distribution(max - min, propability);
+	static auto randSource = std::bind(uniform_distribution, generator);
+	return min + randSource();*/
+	return (random(min, max) - random(min, max)) / 2.f;
+}
+
 float rad2deg(float angleInRad) {
 	return angleInRad * 180.f / PI;
 }

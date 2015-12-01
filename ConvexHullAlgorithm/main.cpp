@@ -17,6 +17,7 @@
 
 #include "Hull.h"
 #include "Dots.h"
+#include "PerformanceMonitor.h"
 
 
 //move into main scope
@@ -225,8 +226,14 @@ void SetupMenu(ResourceManager &resMan) {
 
   Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 260));
   calcHull->setTriggerFunction([]() {
-    ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
-	hull.CreateHull(hull_res.points);
+	  PerformanceMonitor monitor;
+	  monitor.start();
+	  ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
+	  float millis = monitor.stop();
+	  std::cout << dots->m_point_set->getSize() << " Points: convex hull calculated in " << PerformanceMonitor::millisToString(millis) << std::endl;
+
+
+		hull.CreateHull(hull_res.points);
     // std::cout << hull.String();
   });
   g_buttons.push_back(calcHull);
@@ -265,8 +272,19 @@ void SetupMenu(ResourceManager &resMan) {
 
 //############################################################################
 int main() {
+	srand(static_cast<unsigned int>(time(nullptr)));
+	
 
-  srand(static_cast<unsigned int>(time(nullptr)));
+	/*PerformanceMonitor monitor;
+	monitor.start();
+	PointSet points;
+	for(int i = 0; i < 10000000; ++i) {
+		points.addPoint(*new Point(Vec2f(random(0, 10000), random(0, 10000))));
+	}
+	ConvexHull hull_res = findConvexHull(&points);
+	float millis = monitor.stop();
+	std::cout << points.getSize() << " Points: convex hull calculated in " << PerformanceMonitor::millisToString(millis) << std::endl;*/
+
 
   // fps timer
   float elapsedTime;

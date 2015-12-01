@@ -11,6 +11,7 @@ bool equals(float a, float b, float eps);
 bool equals(Vec2f a, Vec2f b, float eps);
 
 float random(float min, float max);
+float randomBinominal(float min, float max);
 
 float rad2deg(float angleInRad);
 float deg2rad(float angleInDeg);
