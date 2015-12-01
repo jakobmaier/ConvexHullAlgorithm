@@ -1,9 +1,12 @@
 #pragma once
+#include "Hull.h"
 #include "Input.h"
+#include "Menu.h"
 #include "ResourceManager.h"
 #include <SFML/Graphics.hpp>
+#include <functional>
 
-typedef void (*function)(void);
+//typedef void (*function)(Menu m);
 
 class Button {
 public:
@@ -14,10 +17,11 @@ public:
 
   void Draw(sf::RenderWindow &window) const;
   void Update(Input input);
-  void setTriggerFunction(function triggerFunction);
+  // void setTriggerFunction(std::function<void(Hul)> );
+  //void setTriggerFunction(function triggerFunction, Menu &menu);
   void SetText(std::string text);
-	void SetNumberText(double number);
-	void SetActiveColor(sf::Color color);
+  void SetNumberText(double number);
+  void SetActiveColor(sf::Color color);
   void SetDefaultColor(sf::Color color);
 
 private:
@@ -27,5 +31,6 @@ private:
   sf::Color m_default_color;
   sf::Color m_default_active_color;
 
-  function m_triggerFunction;
+  //function m_triggerFunction;
+  //Menu *m_menu;
 };

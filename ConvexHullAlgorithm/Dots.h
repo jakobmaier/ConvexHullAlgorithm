@@ -21,8 +21,6 @@ public:
   void Clear();
   void ClearLabels();
 
-  //void Clear();
-
   void CreateDotLabels();
   void CreateDotLabelAndPushBack(ResourceManager::Fonts font,
                                  std::string number, Vec2f pos);

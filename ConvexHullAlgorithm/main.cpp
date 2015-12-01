@@ -14,88 +14,31 @@
 #include "LineShape.h"
 #include "ResourceManager.h"
 
-
-#include "Hull.h"
 #include "Dots.h"
+#include "Hull.h"
+#include "Menu.h"
 
-
-//move into main scope
-
+// move into main scope
 
 Hull hull;
-Dots* dots;
-
+Dots *dots;
+Menu *menu;
 //#####################
 
+//std::vector<Button *> g_buttons;
 
-std::vector<Button *> g_buttons;
-//std::vector<sf::CircleShape *> g_dots;
-//sf::CircleShape *g_reference_dot;
-//std::vector<LineShape *> g_hull_lines;
-//std::vector<sf::Text *> g_numbersForDots;
- 
 sf::View g_gameView;
 sf::View g_sideBarView;
-//PointSet *g_points = nullptr;
-Button g_fieldSizeIndicator;
+//Button g_fieldSizeIndicator;
 int g_fieldSize = 500;
 int g_numberOfPointsToGen = NR_OF_POINTS_TO_GENERATE;
-ResourceManager *g_resManager;
 
 int g_stepCounter = 0;
 
-bool g_showNumbers = true;
-
-// set the viewport to a given size to allow the window to scale
-// this function depends on the window size -> to have correct sized buttons use
-// the coordinatespace of the window accordingly
-sf::View CreateView(sf::Vector2u size, bool setForMenu) {
-
-  auto sidebarWidth = 0.3f;
-  if (setForMenu) {
-    sf::View view(sf::FloatRect(0.f, 0.f,
-                                static_cast<float>(size.x) * sidebarWidth,
-                                static_cast<float>(size.y)));
-    view.setViewport(sf::FloatRect(0.f, 0.f, sidebarWidth, 1.f));
-    return view;
-  }
-  sf::View view(sf::FloatRect(0, 0, static_cast<float>(size.x),
-                              static_cast<float>(size.y)));
-  view.setViewport(sf::FloatRect(sidebarWidth, 0, 1 - sidebarWidth, 1));
-  return view;
-}
-
-
-
-float currentAspectWidth = 0;
-float currentAspectHeight = 0;
-void MaintainAspectRatio(sf::RenderWindow &window) {
-  // TODO impl
-  //	//first we check our new aspect width to see if it changed
-  //	float newAspectWidth = window.getSize().x;
-  //	float newAspectHeight = window.getSize().y;
-  //	if (newAspectWidth != currentAspectWidth)
-  //	{
-  //		//width changed, maintain the aspect ratio and adjust the height
-  //		currentAspectWidth = newAspectWidth;
-  //		currentAspectHeight = currentAspectWidth / aspectRatio;
-  //	}
-  //	else if (newAspectHeight != currentAspectHeight)
-  //	{
-  //		//height changed, maintain aspect ratio and change the width
-  //		currentAspectHeight = newAspectHeight;
-  //		currentAspectWidth = currentAspectHeight * aspectRatio;
-  //	}
-  //	std::cout << "width: " << currentAspectWidth << " height: " <<
-  // currentAspectHeight;
-  //	window.setSize(sf::Vector2u(currentAspectWidth, currentAspectHeight));
-}
-
 //######################################################################
-float GetLength(Vec2f vec) { return (vec.x * vec.x) + (vec.y * vec.y); }
 
 Vec2f g_old_mousePos;
-bool leftMousedown = false;
+bool rightMousedown = false;
 Input PollEvents(sf::RenderWindow &window) {
   Input input;
 
@@ -114,14 +57,14 @@ Input PollEvents(sf::RenderWindow &window) {
     }
     if (event.type == sf::Event::MouseMoved) {
 
-      if (leftMousedown) {
+      if (rightMousedown) {
 
         auto deltaMouse =
             g_old_mousePos - Vec2f(event.mouseMove.x, event.mouseMove.y);
-        //g_gameView.move(deltaMouse);
+
         g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
-		float lenght=	GetLength(deltaMouse);
-		if (lenght >= -8 && lenght <= 8  ) {
+        float lenght = GetLength(deltaMouse);
+        if (lenght >= -45 && lenght <= 45) {
           g_gameView.move(deltaMouse);
         }
 
@@ -129,23 +72,19 @@ Input PollEvents(sf::RenderWindow &window) {
       }
     }
     if (event.type == sf::Event::MouseButtonPressed) {
-      if (event.mouseButton.button == sf::Mouse::Left) {
-        leftMousedown = true;
-		g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
-        // auto deltaMouse = g_old_mousePos - input.mousePos;
-        // g_gameView.move(deltaMouse);
-        // g_old_mousePos = input.mousePos;
+      if (event.mouseButton.button == sf::Mouse::Right) {
+        rightMousedown = true;
+        g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
       }
     }
     if (event.type == sf::Event::MouseButtonReleased) {
+      if (event.mouseButton.button == sf::Mouse::Right) {
+        rightMousedown = false;
+      }
       if (event.mouseButton.button == sf::Mouse::Left) {
         input.leftMouseClicked = true;
-        leftMousedown = false;
 
-        if (!input.isMouseOverSidebar) {
-          dots->CreateDotWithLabelAndPushBack(input.mousePos); // maybe move out from herer????!!
-		  g_stepCounter = 0;
-        }
+       
         /*std::cout << "mouse clicked at: " << input.mousePos.x << " "
         << input.mousePos.y << std::endl;*/
       }
@@ -160,65 +99,6 @@ Input PollEvents(sf::RenderWindow &window) {
   return input;
 }
 
-//void CreateLine(Vec2f pos1, Vec2f pos2, sf::Color color = LINE_COLOR) {
-//  LineShape *lines_shape = new LineShape(pos1, pos2);
-//  lines_shape->setThickness(10.f);
-//
-//  lines_shape->setFillColor(color);
-//
-//  g_hull_lines.push_back(lines_shape);
-//}
-
-//void CreateHull(std::stack<const Point *> &points, const Point *point,
-//                bool deleteSegment = false) {
-//  if (points.size() < 2) {
-//    std::cout << "not enough g_points to draw" << std::endl;
-//    return;
-//  }
-//  g_hull_lines.clear();
-//
-//
-//
-//  const Point *elem = points.top();
-//  points.pop();
-//
-//  if (deleteSegment) //
-//  {
-//	
-//    CreateLine(point->pos(), elem->pos(), LINE_COLOR_DELETE);
-//    CreateLine(point->pos(), points.top()->pos(), LINE_COLOR_NEW);
-//  }
-//
-//  do {
-//    const Point *elemNext = points.top();
-//    points.pop();
-//    if (deleteSegment) {
-//      CreateLine(elem->pos(), elemNext->pos(), LINE_COLOR_DELETE);
-//
-//    } else {
-//      CreateLine(elem->pos(), elemNext->pos(), LINE_COLOR);
-//    }
-//    deleteSegment = false;
-//    elem = elemNext;
-//  } while (!points.empty());
-//}
-
-//void CreateHull(std::vector<const Point *> &points) {
-//  if (points.size() < 2) {
-//    std::cout << "not enough g_points to draw" << std::endl;
-//    return;
-//  }
-//  g_hull_lines.clear();
-//  auto it = points.begin();
-//  auto itNext = points.begin() + 1;
-//
-//  while (itNext != points.end()) {
-//    CreateLine((*it)->pos(), (*itNext)->pos());
-//    ++it;
-//    ++itNext;
-//  }
-//}
-
 void UpdateFieldSize(int delta) {
   g_fieldSize += delta;
   g_fieldSize = (g_fieldSize <= 100) ? 100 : g_fieldSize;
@@ -227,86 +107,87 @@ void UpdateFieldSize(int delta) {
       sf::Vector2u(g_fieldSize,
                    static_cast<unsigned int>(g_fieldSize * GAME_RATIO)),
       false);
-  g_fieldSizeIndicator.SetNumberText(g_fieldSize);
+  //g_fieldSizeIndicator.SetNumberText(g_fieldSize);
 }
 
-void SetupMenu(ResourceManager &resMan) {
-  Button *increaseField = new Button(resMan, "+500", sf::Vector2f(195.f, 140.f),
-                                     sf::Vector2f(100.f, 50.f));
-  increaseField->setTriggerFunction([]() { UpdateFieldSize(500); });
-  g_buttons.push_back(increaseField);
+//void SetupMenu(ResourceManager &) {
+  //Button *increaseField = new Button(resMan, "+500", sf::Vector2f(195.f, 140.f),
+  //                                   sf::Vector2f(100.f, 50.f));
+  //increaseField->setTriggerFunction([]() { UpdateFieldSize(500); });
+  //g_buttons.push_back(increaseField);
 
-  Button *decreaseField = new Button(resMan, "-500", sf::Vector2f(305, 140.f),
-                                     sf::Vector2f(100.f, 50.f));
-  decreaseField->setTriggerFunction([]() { UpdateFieldSize(-500); });
-  g_buttons.push_back(decreaseField);
+  //Button *decreaseField = new Button(resMan, "-500", sf::Vector2f(305, 140.f),
+  //                                   sf::Vector2f(100.f, 50.f));
+  //decreaseField->setTriggerFunction([]() { UpdateFieldSize(-500); });
+  //g_buttons.push_back(decreaseField);
 
-  Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 200));
+  //Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 200));
 
-  stepHull->setTriggerFunction([]() {
+  //stepHull->setTriggerFunction([]() {
 
-    std::cout << g_stepCounter << std::endl;
+  //  std::cout << g_stepCounter << std::endl;
 
-    HullState state = findConvexHullStep(dots->m_point_set.get(), g_stepCounter);
-    g_stepCounter = state.step;
-    switch (state.state) {
-    case SORT_DONE: {
-      std::cout << "Sort done." << std::endl;
-	  dots->ClearLabels();
-	  dots->CreateDotLabels();
-     hull.Clear();
-    } break;
+  //  HullState state =
+  //      findConvexHullStep(dots->m_point_set.get(), g_stepCounter);
+  //  g_stepCounter = state.step;
+  //  switch (state.state) {
+  //  case SORT_DONE: {
+  //    std::cout << "Sort done." << std::endl;
+  //    dots->ClearLabels();
+  //    dots->CreateDotLabels();
+  //    hull.Clear();
+  //  } break;
 
-    case CANDIDATE_ADDED:
-		hull.CreateHull(state.candiates);
-      std::cout << "Candidate(s) added." << std::endl;
-      //
-      break;
-    case CANDIDATE_POPED:
-		hull.CreateHull(state.candiates, state.pointThatCausedPop);
-      std::cout << "Candidate poped." << std::endl;
+  //  case CANDIDATE_ADDED:
+  //    hull.CreateHull(state.candiates);
+  //    std::cout << "Candidate(s) added." << std::endl;
+  //    //
+  //    break;
+  //  case CANDIDATE_POPED:
+  //    hull.CreateHull(state.candiates, state.pointThatCausedPop);
+  //    std::cout << "Candidate poped." << std::endl;
 
-      break;
+  //    break;
 
-    case FINISHED:
-      std::cout << "Algorithm finished." << std::endl;
-      // when finished and this is set to zero the algo could start all over
-      // again -> maybe wanted behaviour
-      g_stepCounter = 0;
-      break;
-    default:
-      break;
-    }
-  });
-  g_buttons.push_back(stepHull);
+  //  case FINISHED:
+  //    std::cout << "Algorithm finished." << std::endl;
+  //    // when finished and this is set to zero the algo could start all over
+  //    // again -> maybe wanted behaviour
+  //    g_stepCounter = 0;
+  //    break;
+  //  default:
+  //    break;
+  //  }
+  //});
+  //g_buttons.push_back(stepHull);
 
+  //Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 260));
+  //calcHull->setTriggerFunction([]() {
+  //  ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
+  //  hull.CreateHull(hull_res.points);
+  //  // std::cout << hull.String();
+  //});
+  //g_buttons.push_back(calcHull);
 
-  Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 260));
-  calcHull->setTriggerFunction([]() {
-    ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
-	hull.CreateHull(hull_res.points);
-    // std::cout << hull.String();
-  });
-  g_buttons.push_back(calcHull);
+  //Button *genDots = new Button(resMan, "Gen Dots", sf::Vector2f(180, 320));
+  //genDots->setTriggerFunction([]() {
+  //  for (int i = 0; i < g_numberOfPointsToGen; ++i) {
+  //    dots->CreateDotWithLabelAndPushBack(
+  //        Vec2f(random(0, static_cast<float>(g_fieldSize)),
+  //              random(0, static_cast<float>(g_fieldSize))));
+  //  }
+  //  dots->CreateDotLabels();
+  //  g_stepCounter = 0;
+  //});
+  //g_buttons.push_back(genDots);
 
-  Button *genDots = new Button(resMan, "Gen Dots", sf::Vector2f(180, 320));
-  genDots->setTriggerFunction([]() {
-    for (int i = 0; i < g_numberOfPointsToGen; ++i) {
-		dots->CreateDotWithLabelAndPushBack(Vec2f(random(0, static_cast<float>(g_fieldSize)),
-                      random(0, static_cast<float>(g_fieldSize))));
-    }
-	dots->CreateDotLabels();
-	g_stepCounter = 0;
-  });
-  g_buttons.push_back(genDots);
-
-  Button *clear = new Button(resMan, "Clear", sf::Vector2f(180, 380));
-  clear->setTriggerFunction([]() {
-	  hull.Clear();
-	  dots->Clear();
-  });
-  g_buttons.push_back(clear);
-}
+  //Button *clear = new Button(resMan, "Clear", sf::Vector2f(180, 380));
+  //clear->setTriggerFunction([]() {
+  //  hull.Clear();
+  //  dots->Clear();
+  //});
+  //g_buttons.push_back(clear);
+//}
 
 //############################################################################
 int main() {
@@ -320,9 +201,10 @@ int main() {
 
   // Globals
   ResourceManager resMan;
-  g_resManager = &resMan;
 
   dots = new Dots(resMan);
+  menu = new Menu(resMan, hull, *dots);
+
   sf::ContextSettings settings;
   settings.antialiasingLevel = 8;
   sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), WINDOW_TITLE,
@@ -330,16 +212,16 @@ int main() {
   g_sideBarView = CreateView(sf::Vector2u(WINDOW_X, WINDOW_Y), true);
   g_gameView = CreateView(sf::Vector2u(1600, 1200), false);
 
-  g_fieldSizeIndicator =
-      Button(resMan, "XXX", sf::Vector2f(70, 140), sf::Vector2f(130.f, 50.f));
-  g_fieldSizeIndicator.SetDefaultColor(BTN_DEFAULT_INDICATOR_COLOR);
-  g_fieldSizeIndicator.Update(Input());
-  SetupMenu(resMan);
+
+
+
+
+  //SetupMenu(resMan);
 
   UpdateFieldSize(0);
 
   sf::RectangleShape menuBackground(sf::Vector2f(WINDOW_X, WINDOW_Y));
-  menuBackground.setFillColor(sf::Color(100, 100, 100, 100));
+  menuBackground.setFillColor(MENU_BACKGROUND_COLOR);
 
   clock.restart();
   while (window.isOpen()) {
@@ -354,25 +236,26 @@ int main() {
 
     // update
     if (input.isMouseOverSidebar) {
-      for (auto &button : g_buttons) {
-        button->Update(input);
-      }
-    }
 
-    // draw the g_points ######################################################
+		menu->Update(input);
+
+	} else
+	{
+		if (input.leftMouseClicked) {
+			dots->CreateDotWithLabelAndPushBack(
+				input.mousePos);
+			g_stepCounter = 0;
+		}
+	}
+    // draw the Dots and Hull #################################################
     window.setView(g_gameView);
 
-	hull.Draw(window);
-	dots->Draw(window);
+    hull.Draw(window);
+    dots->Draw(window);
 
     // Draw the menu here #####################################################
     window.setView(g_sideBarView);
-    // SetViewport(window, sf::Vector2u(WINDOW_X, WINDOW_Y), true);
-    window.draw(menuBackground);
-    for (auto &button : g_buttons) {
-      button->Draw(window);
-    }
-    g_fieldSizeIndicator.Draw(window);
+	menu->Draw(window);
 
     // update title
     if (windowTitleCounter > 0.75) {

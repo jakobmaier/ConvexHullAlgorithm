@@ -26,3 +26,4 @@
 #define GAME_RATIO ((16.f * (1 - SIDEBAR_X)) / 12.f)
 
 
+#define MENU_BACKGROUND_COLOR sf::Color(100, 100, 100, 100)
