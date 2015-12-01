@@ -46,9 +46,10 @@ Garantien der Implementierung:
     - Bei >=1 Punkten wird immer eine Hülle gefunden
     - Die Hülle ist immer gegen den Uhrzeigersinn (auch bei 3 Punkten)
     - Jeder Punkt, der auf der Hülle liegt, ist auch Teil der Hülle*
+    - Der Anfangs- und Endpunkt hat die niedrigste y-Koordinate des Sets, bei Konflikten hat er die höchste x-Koordinate
 
-*Modifizierung des Algoithmus:
-==============================    
+*Modifizierung des Algorithmus:
+===============================
     Bei unseren Tests haben wir festgestellt, dass der Graham's Scan Algorithmus unter bestimmten Umständen nicht funktioniert.
     (Tritt auf, wenn 2 oder mehr Punkte exakt übereinander liegen und ein back-tracking über diesen Punkt erfolgt.)
     Dieses Problem wurde von uns behoben, wodurch bei mehreren Punkten mit selben Koordinaten, die Teil der Hülle sind, immer nur
