@@ -1,17 +1,19 @@
 #include "Button.h"
+#include "Config.h"
 #include "ResourceManager.h"
 #include <iostream>
-#include "Config.h"
 
 #include <SFML/Graphics/Font.hpp>
+#include <iomanip>
+#include <sstream>
 
-Button::Button()
-{
-}
+Button::Button() {}
 
 Button::Button(ResourceManager &resMan, std::string buttontxt,
-	sf::Vector2f position, sf::Vector2f size)
-    : m_default_color(BTN_DEFAULT_COLOR), m_default_active_color(BTN_DEFAULT_ACTIVE_COLOR), m_triggerFunction(nullptr) {
+               sf::Vector2f position, sf::Vector2f size)
+    : m_default_color(BTN_DEFAULT_COLOR),
+      m_default_active_color(BTN_DEFAULT_ACTIVE_COLOR),
+      m_triggerFunction(nullptr) {
 
   m_body.setSize(size);
   auto btnSize = m_body.getGlobalBounds();
@@ -23,7 +25,7 @@ Button::Button(ResourceManager &resMan, std::string buttontxt,
   m_text.setFont(resMan.GetFont(ResourceManager::DEFAULT));
   m_text.setCharacterSize(48);
   m_text.setColor(sf::Color::White);
-  m_text.setPosition(position.x, position.y+8);
+  m_text.setPosition(position.x, position.y + 8);
   SetText(buttontxt);
 
   Update(Input());
@@ -57,33 +59,25 @@ void Button::setTriggerFunction(function triggerFunction) {
   m_triggerFunction = triggerFunction;
 }
 
-void Button::SetText(std::string text)
-{
-	auto position = m_text.getPosition();
-	m_text.setString(text);
-	auto textSize = m_text.getGlobalBounds();
-	Vec2f textSizeHalf(textSize.width / 2.f, (textSize.height + 3));
-	m_text.setOrigin(textSizeHalf.x, textSizeHalf.y);
-	m_text.setPosition(position.x, position.y);
+void Button::SetText(std::string text) {
+  auto position = m_text.getPosition();
+  m_text.setString(text);
+  auto textSize = m_text.getGlobalBounds();
+  Vec2f textSizeHalf(textSize.width / 2.f, (textSize.height + 3));
+  m_text.setOrigin(textSizeHalf.x, textSizeHalf.y);
+  m_text.setPosition(position.x, position.y);
 }
 
-void Button::SetNumberText(double number)
-{
-	if (number < 1000)
-	{
-		SetText(std::to_string((int)number));
-	} else
-	{
-		SetText(std::to_string((int)number/1000) + " K");
-	}
+void Button::SetNumberText(double number) {
+  std::ostringstream ss;
+  ss << std::setfill('0');
+  ss.precision(2);
+
+  ss << (number / 1000) << " K";
+
+  SetText(ss.str());
 }
 
-void Button::SetActiveColor(sf::Color color)
-{
-	m_default_active_color = color;
-}
+void Button::SetActiveColor(sf::Color color) { m_default_active_color = color; }
 
-void Button::SetDefaultColor(sf::Color color)
-{
-	m_default_color = color;
-}
+void Button::SetDefaultColor(sf::Color color) { m_default_color = color; }

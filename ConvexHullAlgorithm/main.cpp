@@ -216,7 +216,7 @@ void SetupMenu(ResourceManager &resMan) {
   decreaseField->setTriggerFunction([]() { UpdateFieldSize(-500); });
   g_buttons.push_back(decreaseField);
 
-  Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 200));
+  Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 380));
   stepHull->setTriggerFunction([]() {
 	  TakeStep();
   }
@@ -224,7 +224,7 @@ void SetupMenu(ResourceManager &resMan) {
   g_buttons.push_back(stepHull);
 
 
-  Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 260));
+  Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 320));
   calcHull->setTriggerFunction([]() {
 	  PerformanceMonitor monitor;
 	  monitor.start();
@@ -238,7 +238,7 @@ void SetupMenu(ResourceManager &resMan) {
   });
   g_buttons.push_back(calcHull);
 
-  Button *genDots = new Button(resMan, "Gen Dots", sf::Vector2f(180, 320));
+  Button *genDots = new Button(resMan, "Gen Dots", sf::Vector2f(180, 260));
   genDots->setTriggerFunction([]() {
     for (int i = 0; i < g_numberOfPointsToGen; ++i) {
 		dots->CreateDotWithLabelAndPushBack(Vec2f(random(0, static_cast<float>(g_fieldSize)),
@@ -249,20 +249,20 @@ void SetupMenu(ResourceManager &resMan) {
   });
   g_buttons.push_back(genDots);
 
-  Button *clear = new Button(resMan, "Clear", sf::Vector2f(180, 380));
+  Button *clear = new Button(resMan, "Clear", sf::Vector2f(180, 500));
   clear->setTriggerFunction([]() {
 	  hull.Clear();
 	  dots->Clear();
   });
   g_buttons.push_back(clear);
 
-  Button *toggleNumbers = new Button(resMan, "Toggle Nums", sf::Vector2f(180, 440));
+  Button *toggleNumbers = new Button(resMan, "Toggle Nums", sf::Vector2f(180, 200));
   toggleNumbers->setTriggerFunction([]() {
 	  dots->m_render_dots = !dots->m_render_dots;
   });
   g_buttons.push_back(toggleNumbers);
 
-  Button *step_back = new Button(resMan, "Step back", sf::Vector2f(180, 500));
+  Button *step_back = new Button(resMan, "Step back", sf::Vector2f(180, 440));
   step_back->setTriggerFunction([]() {
 	  g_stepCounter -=2;
 	  TakeStep();
