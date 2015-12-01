@@ -1,0 +1,88 @@
+Graham's Scan Algorithmus:
+**************************
+
+Aufwand nach O-Notation:
+========================
+    Führt zuerst eine sortierung nach Winkeln durch:  O(n*logn)
+    Danach:
+        O(n) zum Iterieren über die punkte,
+        Eventuelles backtracking --> Der Aufwand scheint auf ersten Blick daher O(n²) zu sein.
+        Es ist allerdings nur O(n), weil jeder Punkt höchstens 2x angesehen wird:
+            1x in einer links-Drehung, bei der der Punkt übernommen wird 
+                    (normales iterieren, wenn kein backtracking auftritt)
+            1x bei einer rechts-Drehung (popping eines bestehenden Punktes vom Stack). 
+                    Jeder Punkt kann beim back-tracking nur 1x gepopped werden, da er anschließend nicht mehr am Stack liegt.
+
+
+        Gesamtaufwand ist daher
+            Sortieren:      O(n*logn)
+            Convex Hull:    O(n)
+            ------------------------------
+            Insgesammt:     O(n*logn)
+
+
+Zeitlicher Aufwand:
+===================
+    Messungen des Release Candidates haben folgende Werte ergeben:
+    (Intel i7, 2.4GHz, single-threaded execution)
+
+    Punkte        Zeitaufwand
+    -------------------------
+    0-500                <1ms
+    500                   1ms
+    1000                  3ms
+    2000                  7ms
+    10.000              117ms
+    100.000           2.081ms
+    1.000.000        13.851ms
+    10.000.000     2:44.076ms
+
+
+Garantien der Implementierung:
+==============================
+
+    - Die Hülle ist Convex
+    - Die Hülle ist geschlossen (Anfangspunkt = Endpunkt)
+    - Bei >=1 Punkten wird immer eine Hülle gefunden
+    - Die Hülle ist immer gegen den Uhrzeigersinn (auch bei 3 Punkten)
+    - Jeder Punkt, der auf der Hülle liegt, ist auch Teil der Hülle*
+
+*Modifizierung des Algoithmus:
+==============================    
+    Bei unseren Tests haben wir festgestellt, dass der Graham's Scan Algorithmus unter bestimmten Umständen nicht funktioniert.
+    (Tritt auf, wenn 2 oder mehr Punkte exakt übereinander liegen und ein back-tracking über diesen Punkt erfolgt.)
+    Dieses Problem wurde von uns behoben, wodurch bei mehreren Punkten mit selben Koordinaten, die Teil der Hülle sind, immer nur
+    einer dieser Punkte tatsächlich ins Point-Set der Hülle gelangt.
+    Dieses Verhalten kann in der Datei Hullfinder.cpp zur veranschaulichung deaktiviert werden.
+
+    Beispielmuster, bei der der Fehler auftritt:
+              ___0__
+           __/      \__
+          /     x      \
+         4______________1
+        
+    An Position 'x' befinden sich die beiden Punkte 2 und 3, mit exakt gleichen Koordinaten.
+
+
+Implementierung des durchsteppens:
+==================================
+    Der Algorithmus hat an interessanten stellen "Breakpoints", bei denen er eine step-Variable erhöht.
+    Beim Aufruf des Algorithmus kann festgelegt werden, wieviele dieser steps berechnet werden sollen, bevor abgebrochen wird.
+    Sobald der gewünschte Step erreicht wird, erstellt der Algorithmus ein struct mit seinem internen Zustand, das alle Informationen
+    für die grafische Ausgabe beinhaltet.
+    
+    Mit jedem simulationsschritt startet der Convex-Hull Algorithmus also von vorne, und bricht daher um einen Schritt später ab,
+    Da man beim durchsteppen des Algorithmus immer nur wenige Punkte hat, ist der Performanceoverhead daher gering, und fällt dem User nicht auf.
+   
+    Grafische Bedeutung:   
+
+        Wenn ein Punkt im Hull-Stack als falsch identifiziert wird (back-tracking),
+        wird der falsche Weg grün markiert. Dieser macht eine clock-wise Biegung, was einer Convexen Hülle wiedersprechen würde.
+        Der hellgraue markierte Weg ist die Alternativroute, die den grünen Weg ersetzen wird.
+
+Steuerung:
+==========
+    Linke Maustaste:    Neuen Punkt platzieren
+    Rechte Maustaste:   Verschieben des angezeigten Bildausschnitts.
+
+

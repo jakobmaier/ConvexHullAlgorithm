@@ -252,8 +252,19 @@ void SetupMenu(ResourceManager &resMan) {
 
 //############################################################################
 int main() {
+	srand(static_cast<unsigned int>(time(nullptr)));
+	
 
-  srand(static_cast<unsigned int>(time(nullptr)));
+	/*PerformanceMonitor monitor;
+	monitor.start();
+	PointSet points;
+	for(int i = 0; i < 10000000; ++i) {
+		points.addPoint(*new Point(Vec2f(random(0, 10000), random(0, 10000))));
+	}
+	ConvexHull hull_res = findConvexHull(&points);
+	float millis = monitor.stop();
+	std::cout << points.getSize() << " Points: convex hull calculated in " << PerformanceMonitor::millisToString(millis) << std::endl;*/
+
 
   // fps timer
   float elapsedTime;
