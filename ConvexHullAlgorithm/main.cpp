@@ -19,7 +19,6 @@
 #include "Menu.h"
 
 // move into main scope
-
 Hull hull;
 Dots *dots;
 Menu *menu;
@@ -29,7 +28,6 @@ Menu *menu;
 
 sf::View g_gameView;
 sf::View g_sideBarView;
-//Button g_fieldSizeIndicator;
 int g_fieldSize = 500;
 int g_numberOfPointsToGen = NR_OF_POINTS_TO_GENERATE;
 
@@ -83,10 +81,6 @@ Input PollEvents(sf::RenderWindow &window) {
       }
       if (event.mouseButton.button == sf::Mouse::Left) {
         input.leftMouseClicked = true;
-
-       
-        /*std::cout << "mouse clicked at: " << input.mousePos.x << " "
-        << input.mousePos.y << std::endl;*/
       }
     }
 
@@ -122,7 +116,6 @@ void UpdateFieldSize(int delta) {
   //g_buttons.push_back(decreaseField);
 
   //Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 200));
-
   //stepHull->setTriggerFunction([]() {
 
   //  std::cout << g_stepCounter << std::endl;
@@ -161,13 +154,7 @@ void UpdateFieldSize(int delta) {
   //});
   //g_buttons.push_back(stepHull);
 
-  //Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 260));
-  //calcHull->setTriggerFunction([]() {
-  //  ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
-  //  hull.CreateHull(hull_res.points);
-  //  // std::cout << hull.String();
-  //});
-  //g_buttons.push_back(calcHull);
+
 
   //Button *genDots = new Button(resMan, "Gen Dots", sf::Vector2f(180, 320));
   //genDots->setTriggerFunction([]() {

@@ -6,19 +6,16 @@
 #include <SFML/Graphics.hpp>
 #include <functional>
 
-//typedef void (*function)(Menu m);
-
 class Button {
 public:
-  //Button();
   Button(ResourceManager &resMan, std::string buttontxt, sf::Vector2f position,
          sf::Vector2f size = sf::Vector2f(350.f, 50.f));
   ~Button();
 
   void Draw(sf::RenderWindow &window) const;
   void Update(Input input);
-  // void setTriggerFunction(std::function<void(Hul)> );
- void setTriggerFunction(std::function<void(void)> triggerFunction, Menu &menu);
+  void setTriggerFunction(std::function<void(void)> triggerFunction,
+                          Menu &menu);
   void SetText(std::string text);
   void SetNumberText(double number);
   void SetActiveColor(sf::Color color);

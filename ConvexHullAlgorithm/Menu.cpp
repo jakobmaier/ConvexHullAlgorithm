@@ -2,6 +2,10 @@
 #include "Input.h"
 #include "Menu.h"
 #include "Button.h"
+#include "Dots.h"
+#include <iostream>
+#include "ConvexHull.h"
+#include "HullFinder.h"
 
 Menu::Menu(ResourceManager &resMan, Hull &hull, Dots &dots)
     : m_resMan(resMan), m_hull(hull), m_dots(dots) {
@@ -17,15 +21,24 @@ Menu::Menu(ResourceManager &resMan, Hull &hull, Dots &dots)
   fieldSizeIndicator->Update(Input());
   m_indicators.push_back(fieldSizeIndicator);
 
-  // // ############# Buttons ############################
-
+  // ############# Buttons ############################
    Button *clear =
        new Button(resMan, "Clear", sf::Vector2f(180, 380));
-   //clear->setTriggerFunction([this]() {
-   //  m_hull.Clear();
-   //  m_dots.Clear();
-   //});
+   clear->setTriggerFunction([this]() {
+	   std::cout << "test" << std::endl;
+     m_hull.Clear();
+     m_dots.Clear();
+   }, *this);
    m_buttons.push_back(clear);
+
+
+   //Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 260));
+   //calcHull->setTriggerFunction([this]() {
+   //  ConvexHull hull_res = findConvexHull(m_dots.m_point_set.get());
+   //  hull.CreateHull(hull_res.points);
+   //  // std::cout << hull.String();
+   //});
+   //g_buttons.push_back(calcHull);
 }
 
 Menu::~Menu() {}
