@@ -14,20 +14,16 @@
 #include "LineShape.h"
 #include "ResourceManager.h"
 
-
-#include "Hull.h"
 #include "Dots.h"
+#include "Hull.h"
 #include "PerformanceMonitor.h"
 
-
-//move into main scope
-
+// move into main scope
 
 Hull hull;
-Dots* dots;
+Dots *dots;
 
 //#####################
-
 
 std::vector<Button *> g_buttons;
 sf::View g_gameView;
@@ -39,7 +35,7 @@ ResourceManager *g_resManager;
 
 int g_stepCounter = 0;
 
-bool g_showNumbers = true;
+bool animate = false;
 
 // set the viewport to a given size to allow the window to scale
 // this function depends on the window size -> to have correct sized buttons use
@@ -59,8 +55,6 @@ sf::View CreateView(sf::Vector2u size, bool setForMenu) {
   view.setViewport(sf::FloatRect(sidebarWidth, 0, 1 - sidebarWidth, 1));
   return view;
 }
-
-
 
 float currentAspectWidth = 0;
 float currentAspectHeight = 0;
@@ -115,31 +109,31 @@ Input PollEvents(sf::RenderWindow &window) {
             g_old_mousePos - Vec2f(event.mouseMove.x, event.mouseMove.y);
 
         g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
-		float lenght=	GetLength(deltaMouse);
-		if (lenght >= -45 && lenght <= 45  ) {
+        float lenght = GetLength(deltaMouse);
+        if (lenght >= -45 && lenght <= 45) {
           g_gameView.move(deltaMouse);
         }
 
-        //std::cout << deltaMouse.x << std::endl;
+        // std::cout << deltaMouse.x << std::endl;
       }
     }
     if (event.type == sf::Event::MouseButtonPressed) {
       if (event.mouseButton.button == sf::Mouse::Right) {
         rightMousedown = true;
-		g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
-
+        g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
       }
     }
     if (event.type == sf::Event::MouseButtonReleased) {
-		if (event.mouseButton.button == sf::Mouse::Right) {
-			rightMousedown = false;
-		}
+      if (event.mouseButton.button == sf::Mouse::Right) {
+        rightMousedown = false;
+      }
       if (event.mouseButton.button == sf::Mouse::Left) {
         input.leftMouseClicked = true;
 
         if (!input.isMouseOverSidebar) {
-          dots->CreateDotWithLabelAndPushBack(input.mousePos); // maybe move out from herer????!!
-		  g_stepCounter = 0;
+          dots->CreateDotWithLabelAndPushBack(
+              input.mousePos); // maybe move out from herer????!!
+          g_stepCounter = 0;
         }
         /*std::cout << "mouse clicked at: " << input.mousePos.x << " "
         << input.mousePos.y << std::endl;*/
@@ -165,46 +159,45 @@ void UpdateFieldSize(int delta) {
       false);
   g_fieldSizeIndicator.SetNumberText(g_fieldSize);
 }
-void TakeStep()
-{
-	
+bool TakeStep() {
 
-		std::cout << g_stepCounter << std::endl;
+  std::cout << g_stepCounter << std::endl;
 
-		HullState state = findConvexHullStep(dots->m_point_set.get(), g_stepCounter);
-		g_stepCounter = state.step;
-		switch (state.state) {
-		case SORT_DONE: {
-			std::cout << "Sort done." << std::endl;
-			dots->ClearLabels();
-			dots->CreateDotLabels();
-			hull.Clear();
-		} break;
+  HullState state = findConvexHullStep(dots->m_point_set.get(), g_stepCounter);
+  g_stepCounter = state.step;
+  switch (state.state) {
+  case SORT_DONE: {
+    std::cout << "Sort done." << std::endl;
+    dots->ClearLabels();
+    dots->CreateDotLabels();
+    hull.Clear();
+  } break;
 
-		case CANDIDATE_ADDED:
-			hull.CreateHull(state.candiates);
-			std::cout << "Candidate(s) added." << std::endl;
-			//
-			break;
-		case CANDIDATE_POPED:
-			hull.CreateHull(state.candiates, state.pointThatCausedPop);
-			std::cout << "Candidate poped." << std::endl;
+  case CANDIDATE_ADDED:
+    hull.CreateHull(state.candiates);
+    std::cout << "Candidate(s) added." << std::endl;
+    //
+    break;
+  case CANDIDATE_POPED:
+    hull.CreateHull(state.candiates, state.pointThatCausedPop);
+    std::cout << "Candidate poped." << std::endl;
 
-			break;
+    break;
 
-		case FINISHED:
-			std::cout << "Algorithm finished." << std::endl;
-			hull.CreateHull(state.hull.points);
-			// when finished and this is set to zero the algo could start all over
-			// again -> maybe wanted behaviour
-			g_stepCounter = 0;
-			break;
-		default:
-			break;
-		}
-	
-
+  case FINISHED:
+    std::cout << "Algorithm finished." << std::endl;
+    hull.CreateHull(state.hull.points);
+    // when finished and this is set to zero the algo could start all over
+    // again -> maybe wanted behaviour
+    g_stepCounter = 0;
+    return true;
+    break;
+  default:
+    break;
+  }
+  return false;
 }
+void Animate() { animate = true; }
 void SetupMenu(ResourceManager &resMan) {
   Button *increaseField = new Button(resMan, "+500", sf::Vector2f(195.f, 140.f),
                                      sf::Vector2f(100.f, 50.f));
@@ -217,23 +210,20 @@ void SetupMenu(ResourceManager &resMan) {
   g_buttons.push_back(decreaseField);
 
   Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 380));
-  stepHull->setTriggerFunction([]() {
-	  TakeStep();
-  }
-  );
+  stepHull->setTriggerFunction([]() { TakeStep(); });
   g_buttons.push_back(stepHull);
-
 
   Button *calcHull = new Button(resMan, "Calc Hull", sf::Vector2f(180, 320));
   calcHull->setTriggerFunction([]() {
-	  PerformanceMonitor monitor;
-	  monitor.start();
-	  ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
-	  float millis = monitor.stop();
-	  std::cout << dots->m_point_set->getSize() << " Points: convex hull calculated in " << PerformanceMonitor::millisToString(millis) << std::endl;
+    PerformanceMonitor monitor;
+    monitor.start();
+    ConvexHull hull_res = findConvexHull(dots->m_point_set.get());
+    float millis = monitor.stop();
+    std::cout << dots->m_point_set->getSize()
+              << " Points: convex hull calculated in "
+              << PerformanceMonitor::millisToString(millis) << std::endl;
 
-
-		hull.CreateHull(hull_res.points);
+    hull.CreateHull(hull_res.points);
     // std::cout << hull.String();
   });
   g_buttons.push_back(calcHull);
@@ -241,54 +231,60 @@ void SetupMenu(ResourceManager &resMan) {
   Button *genDots = new Button(resMan, "Gen Dots", sf::Vector2f(180, 260));
   genDots->setTriggerFunction([]() {
     for (int i = 0; i < g_numberOfPointsToGen; ++i) {
-		dots->CreateDotWithLabelAndPushBack(Vec2f(random(0, static_cast<float>(g_fieldSize)),
-                      random(0, static_cast<float>(g_fieldSize))));
+      dots->CreateDotWithLabelAndPushBack(
+          Vec2f(random(0, static_cast<float>(g_fieldSize)),
+                random(0, static_cast<float>(g_fieldSize))));
     }
-	dots->CreateDotLabels();
-	g_stepCounter = 0;
+    dots->CreateDotLabels();
+    g_stepCounter = 0;
   });
   g_buttons.push_back(genDots);
 
-  Button *clear = new Button(resMan, "Clear", sf::Vector2f(180, 500));
+  Button *clear = new Button(resMan, "Clear", sf::Vector2f(180, 560));
   clear->setTriggerFunction([]() {
-	  hull.Clear();
-	  dots->Clear();
+    hull.Clear();
+    dots->Clear();
   });
   g_buttons.push_back(clear);
 
-  Button *toggleNumbers = new Button(resMan, "Toggle Nums", sf::Vector2f(180, 200));
-  toggleNumbers->setTriggerFunction([]() {
-	  dots->m_render_dots = !dots->m_render_dots;
-  });
+  Button *toggleNumbers =
+      new Button(resMan, "Toggle Nums", sf::Vector2f(180, 200));
+  toggleNumbers->setTriggerFunction(
+      []() { dots->m_render_dots = !dots->m_render_dots; });
   g_buttons.push_back(toggleNumbers);
 
   Button *step_back = new Button(resMan, "Step back", sf::Vector2f(180, 440));
   step_back->setTriggerFunction([]() {
-	  g_stepCounter -=2;
-	  TakeStep();
+    g_stepCounter -= 2;
+    TakeStep();
   });
   g_buttons.push_back(step_back);
+
+  Button *animate = new Button(resMan, "Animate", sf::Vector2f(180, 500));
+  animate->setTriggerFunction([]() { Animate(); });
+  g_buttons.push_back(animate);
 }
 
 //############################################################################
 int main() {
-	srand(static_cast<unsigned int>(time(nullptr)));
-	
+  srand(static_cast<unsigned int>(time(nullptr)));
 
-	/*PerformanceMonitor monitor;
-	monitor.start();
-	PointSet points;
-	for(int i = 0; i < 10000000; ++i) {
-		points.addPoint(*new Point(Vec2f(random(0, 10000), random(0, 10000))));
-	}
-	ConvexHull hull_res = findConvexHull(&points);
-	float millis = monitor.stop();
-	std::cout << points.getSize() << " Points: convex hull calculated in " << PerformanceMonitor::millisToString(millis) << std::endl;*/
-
+  /*PerformanceMonitor monitor;
+  monitor.start();
+  PointSet points;
+  for(int i = 0; i < 10000000; ++i) {
+          points.addPoint(*new Point(Vec2f(random(0, 10000), random(0,
+  10000))));
+  }
+  ConvexHull hull_res = findConvexHull(&points);
+  float millis = monitor.stop();
+  std::cout << points.getSize() << " Points: convex hull calculated in " <<
+  PerformanceMonitor::millisToString(millis) << std::endl;*/
 
   // fps timer
   float elapsedTime;
   float windowTitleCounter = 0;
+  float animationCounter = 0;
   sf::Clock clock;
 
   // Globals
@@ -321,10 +317,22 @@ int main() {
     elapsedTime = clock.getElapsedTime().asSeconds();
     clock.restart();
     windowTitleCounter += elapsedTime;
+
     float fps = 1.f / elapsedTime;
 
     Input input = PollEvents(window);
 
+    if (animate) {
+      animationCounter += elapsedTime;
+    }
+    if (animationCounter > 0.25) {
+      animationCounter = 0;
+      bool isFinished = TakeStep();
+      if (isFinished) {
+        animate = false;
+        std::cout << "Animation finished" << std::endl;
+      }
+    }
     // update
     if (input.isMouseOverSidebar) {
       for (auto &button : g_buttons) {
@@ -335,8 +343,8 @@ int main() {
     // draw the g_points ######################################################
     window.setView(g_gameView);
 
-	hull.Draw(window);
-	dots->Draw(window);
+    hull.Draw(window);
+    dots->Draw(window);
 
     // Draw the menu here #####################################################
     window.setView(g_sideBarView);
