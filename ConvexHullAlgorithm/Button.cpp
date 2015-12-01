@@ -69,8 +69,13 @@ void Button::SetText(std::string text)
 
 void Button::SetNumberText(double number)
 {
-	// do smthing 
-	SetText("1 K");
+	if (number < 1000)
+	{
+		SetText(std::to_string((int)number));
+	} else
+	{
+		SetText(std::to_string((int)number/1000) + " K");
+	}
 }
 
 void Button::SetActiveColor(sf::Color color)

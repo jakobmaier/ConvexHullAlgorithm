@@ -77,6 +77,9 @@ HullState findConvexHullStep(PointSet *pointSet, int simulateUntilStep) {
     for (int i = 0; i < pointCount; ++i) {
       hull.addPoint(*pointSet->getPoint(i));
     }
+	if (pointCount > 0) {
+		hull.addPoint(*pointSet->getPoint(0));
+	}
     return HullState::HullFound(hull);
   }
 

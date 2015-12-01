@@ -164,7 +164,46 @@ void UpdateFieldSize(int delta) {
       false);
   g_fieldSizeIndicator.SetNumberText(g_fieldSize);
 }
+void TakeStep()
+{
+	
 
+		std::cout << g_stepCounter << std::endl;
+
+		HullState state = findConvexHullStep(dots->m_point_set.get(), g_stepCounter);
+		g_stepCounter = state.step;
+		switch (state.state) {
+		case SORT_DONE: {
+			std::cout << "Sort done." << std::endl;
+			dots->ClearLabels();
+			dots->CreateDotLabels();
+			hull.Clear();
+		} break;
+
+		case CANDIDATE_ADDED:
+			hull.CreateHull(state.candiates);
+			std::cout << "Candidate(s) added." << std::endl;
+			//
+			break;
+		case CANDIDATE_POPED:
+			hull.CreateHull(state.candiates, state.pointThatCausedPop);
+			std::cout << "Candidate poped." << std::endl;
+
+			break;
+
+		case FINISHED:
+			std::cout << "Algorithm finished." << std::endl;
+			hull.CreateHull(state.hull.points);
+			// when finished and this is set to zero the algo could start all over
+			// again -> maybe wanted behaviour
+			g_stepCounter = 0;
+			break;
+		default:
+			break;
+		}
+	
+
+}
 void SetupMenu(ResourceManager &resMan) {
   Button *increaseField = new Button(resMan, "+500", sf::Vector2f(195.f, 140.f),
                                      sf::Vector2f(100.f, 50.f));
@@ -177,42 +216,10 @@ void SetupMenu(ResourceManager &resMan) {
   g_buttons.push_back(decreaseField);
 
   Button *stepHull = new Button(resMan, "Step", sf::Vector2f(180, 200));
-
   stepHull->setTriggerFunction([]() {
-
-    std::cout << g_stepCounter << std::endl;
-
-    HullState state = findConvexHullStep(dots->m_point_set.get(), g_stepCounter);
-    g_stepCounter = state.step;
-    switch (state.state) {
-    case SORT_DONE: {
-      std::cout << "Sort done." << std::endl;
-	  dots->ClearLabels();
-	  dots->CreateDotLabels();
-     hull.Clear();
-    } break;
-
-    case CANDIDATE_ADDED:
-		hull.CreateHull(state.candiates);
-      std::cout << "Candidate(s) added." << std::endl;
-      //
-      break;
-    case CANDIDATE_POPED:
-		hull.CreateHull(state.candiates, state.pointThatCausedPop);
-      std::cout << "Candidate poped." << std::endl;
-
-      break;
-
-    case FINISHED:
-      std::cout << "Algorithm finished." << std::endl;
-      // when finished and this is set to zero the algo could start all over
-      // again -> maybe wanted behaviour
-      g_stepCounter = 0;
-      break;
-    default:
-      break;
-    }
-  });
+	  TakeStep();
+  }
+  );
   g_buttons.push_back(stepHull);
 
 
@@ -241,6 +248,19 @@ void SetupMenu(ResourceManager &resMan) {
 	  dots->Clear();
   });
   g_buttons.push_back(clear);
+
+  Button *toggleNumbers = new Button(resMan, "Toggle Nums", sf::Vector2f(180, 440));
+  toggleNumbers->setTriggerFunction([]() {
+	  dots->m_render_dots = !dots->m_render_dots;
+  });
+  g_buttons.push_back(toggleNumbers);
+
+  Button *step_back = new Button(resMan, "Step back", sf::Vector2f(180, 500));
+  step_back->setTriggerFunction([]() {
+	  g_stepCounter -=2;
+	  TakeStep();
+  });
+  g_buttons.push_back(step_back);
 }
 
 //############################################################################
