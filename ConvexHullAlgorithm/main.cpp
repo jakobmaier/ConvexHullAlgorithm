@@ -29,14 +29,8 @@ Dots* dots;
 
 
 std::vector<Button *> g_buttons;
-//std::vector<sf::CircleShape *> g_dots;
-//sf::CircleShape *g_reference_dot;
-//std::vector<LineShape *> g_hull_lines;
-//std::vector<sf::Text *> g_numbersForDots;
- 
 sf::View g_gameView;
 sf::View g_sideBarView;
-//PointSet *g_points = nullptr;
 Button g_fieldSizeIndicator;
 int g_fieldSize = 500;
 int g_numberOfPointsToGen = NR_OF_POINTS_TO_GENERATE;
@@ -95,7 +89,7 @@ void MaintainAspectRatio(sf::RenderWindow &window) {
 float GetLength(Vec2f vec) { return (vec.x * vec.x) + (vec.y * vec.y); }
 
 Vec2f g_old_mousePos;
-bool leftMousedown = false;
+bool rightMousedown = false;
 Input PollEvents(sf::RenderWindow &window) {
   Input input;
 
@@ -114,33 +108,33 @@ Input PollEvents(sf::RenderWindow &window) {
     }
     if (event.type == sf::Event::MouseMoved) {
 
-      if (leftMousedown) {
+      if (rightMousedown) {
 
         auto deltaMouse =
             g_old_mousePos - Vec2f(event.mouseMove.x, event.mouseMove.y);
-        //g_gameView.move(deltaMouse);
+
         g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
 		float lenght=	GetLength(deltaMouse);
-		if (lenght >= -8 && lenght <= 8  ) {
+		if (lenght >= -45 && lenght <= 45  ) {
           g_gameView.move(deltaMouse);
         }
 
-        std::cout << deltaMouse.x << std::endl;
+        //std::cout << deltaMouse.x << std::endl;
       }
     }
     if (event.type == sf::Event::MouseButtonPressed) {
-      if (event.mouseButton.button == sf::Mouse::Left) {
-        leftMousedown = true;
+      if (event.mouseButton.button == sf::Mouse::Right) {
+        rightMousedown = true;
 		g_old_mousePos = Vec2f(event.mouseMove.x, event.mouseMove.y);
-        // auto deltaMouse = g_old_mousePos - input.mousePos;
-        // g_gameView.move(deltaMouse);
-        // g_old_mousePos = input.mousePos;
+
       }
     }
     if (event.type == sf::Event::MouseButtonReleased) {
+		if (event.mouseButton.button == sf::Mouse::Right) {
+			rightMousedown = false;
+		}
       if (event.mouseButton.button == sf::Mouse::Left) {
         input.leftMouseClicked = true;
-        leftMousedown = false;
 
         if (!input.isMouseOverSidebar) {
           dots->CreateDotWithLabelAndPushBack(input.mousePos); // maybe move out from herer????!!
@@ -159,65 +153,6 @@ Input PollEvents(sf::RenderWindow &window) {
   }
   return input;
 }
-
-//void CreateLine(Vec2f pos1, Vec2f pos2, sf::Color color = LINE_COLOR) {
-//  LineShape *lines_shape = new LineShape(pos1, pos2);
-//  lines_shape->setThickness(10.f);
-//
-//  lines_shape->setFillColor(color);
-//
-//  g_hull_lines.push_back(lines_shape);
-//}
-
-//void CreateHull(std::stack<const Point *> &points, const Point *point,
-//                bool deleteSegment = false) {
-//  if (points.size() < 2) {
-//    std::cout << "not enough g_points to draw" << std::endl;
-//    return;
-//  }
-//  g_hull_lines.clear();
-//
-//
-//
-//  const Point *elem = points.top();
-//  points.pop();
-//
-//  if (deleteSegment) //
-//  {
-//	
-//    CreateLine(point->pos(), elem->pos(), LINE_COLOR_DELETE);
-//    CreateLine(point->pos(), points.top()->pos(), LINE_COLOR_NEW);
-//  }
-//
-//  do {
-//    const Point *elemNext = points.top();
-//    points.pop();
-//    if (deleteSegment) {
-//      CreateLine(elem->pos(), elemNext->pos(), LINE_COLOR_DELETE);
-//
-//    } else {
-//      CreateLine(elem->pos(), elemNext->pos(), LINE_COLOR);
-//    }
-//    deleteSegment = false;
-//    elem = elemNext;
-//  } while (!points.empty());
-//}
-
-//void CreateHull(std::vector<const Point *> &points) {
-//  if (points.size() < 2) {
-//    std::cout << "not enough g_points to draw" << std::endl;
-//    return;
-//  }
-//  g_hull_lines.clear();
-//  auto it = points.begin();
-//  auto itNext = points.begin() + 1;
-//
-//  while (itNext != points.end()) {
-//    CreateLine((*it)->pos(), (*itNext)->pos());
-//    ++it;
-//    ++itNext;
-//  }
-//}
 
 void UpdateFieldSize(int delta) {
   g_fieldSize += delta;
